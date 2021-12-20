@@ -4,6 +4,8 @@ import 'navigation/navDrawer.dart';
 import 'navigation/navBar.dart';
 
 class EventsPage extends StatelessWidget {
+  const EventsPage({Key? key}) : super(key: key);
+
   static const String routeName = '/events';
 
   @override
