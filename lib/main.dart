@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:rehist/views/eventsPage.dart';
+import 'package:rehist/views/events_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-import 'views/homePage.dart';
+import 'views/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,8 +13,8 @@ void main() async {
   runApp(const MyApp());
 }
 Map<String, WidgetBuilder> routes = {
-  "/": (context) => HomePage(),
-  "/events": (context) => EventsPage()
+  "/": (context) => const HomePage(),
+  "/events": (context) => const EventsPage()
 };
 
 class MyApp extends StatelessWidget {

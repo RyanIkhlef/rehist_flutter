@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'navigation/navDrawer.dart';
-import 'navigation/navBar.dart';
+import 'navigation/nav_drawer.dart';
+import 'navigation/nav_bar.dart';
 
 class EventsPage extends StatelessWidget {
   const EventsPage({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class EventsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: NavBar.navBar(context),
-      drawer: NavDrawer(),
+      drawer: const NavDrawer(),
       body: const Center(
         child: Text("Je suis la liste des évenements"),
       ),
