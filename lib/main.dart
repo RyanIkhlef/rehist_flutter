@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:rehist/eventsPage.dart';
+import 'package:rehist/views/eventsPage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-import 'homePage.dart';
+import 'views/homePage.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 Map<String, WidgetBuilder> routes = {
