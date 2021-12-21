@@ -15,13 +15,17 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: NavBar.navBar(context),
       drawer: const NavDrawer(),
-      body: Column(
-        children: [
-          _banner(context),
-          const Padding(padding: EdgeInsets.only(bottom: 40)),
-          _nextEvents(),
-          _eventList(context),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _banner(context),
+            const Padding(padding: EdgeInsets.only(bottom: 40)),
+            _nextEvents(),
+            _eventList(context),
+            _lastAssociations(),
+            _associationList(context),
+          ],
+        ),
       ),
     );
   }
@@ -70,48 +74,94 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-        Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 90),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                ),
-                onPressed: () {
-                  print('Pressed');
-                },
-                child: Row(
-                  children: const [
-                    Text("Voir tous",
-                      style: TextStyle(color: Color(0xfff6ae2d)),
-                      textAlign: TextAlign.start,),
-                    Image(
-                      image: AssetImage("assets/images/right_arrow.png"),
-                      width: 25,
-                      height: 25,
-                      alignment: Alignment.centerLeft,
-                      color: Color(0xfff6ae2d),
-                    ),
-                  ],
-                ),
-              ),
-            )
-        ),
+        _showAll(),
       ],
     );
   }
 
   _eventList(BuildContext context) {
     return SizedBox(
-      height: 392,
+      height: 200,
       width: MediaQuery.of(context).size.width,
       child: ListView(
         children: [
           const ListTile(title: Text("Event 1"),),
-          ListBody(children: const [Text("description")],)
+          ListBody(children: const [Text("description")],),
+          const ListTile(title: Text("Event 2"),),
+          ListBody(children: const [Text("description")],),
+          const ListTile(title: Text("Event 3"),),
+          ListBody(children: const [Text("description")],),
         ],
       ),
+    );
+  }
+
+  _lastAssociations() {
+    return Row(
+      children: [
+        const Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: EdgeInsets.only(left: 15),
+            child: Text(
+              "Dernières associations",
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+        ),
+        _showAll()
+      ],
+    );
+  }
+
+  _associationList(BuildContext context) {
+    return SizedBox(
+      height: 200,
+      width: MediaQuery.of(context).size.width,
+      child: ListView(
+        children: [
+          const ListTile(title: Text("Association 1"),),
+          ListBody(children: const [Text("description")],),
+          const ListTile(title: Text("Association 2"),),
+          ListBody(children: const [Text("description")],),
+          const ListTile(title: Text("Association 3"),),
+          ListBody(children: const [Text("description")],),
+        ],
+      ),
+    );
+  }
+
+  _showAll() {
+    return Align(
+        alignment: Alignment.centerRight,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 90),
+          child: ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            ),
+            onPressed: () {
+              print('Pressed');
+            },
+            child: Row(
+              children: const [
+                Text("Voir tous",
+                  style: TextStyle(color: Color(0xfff6ae2d)),
+                  textAlign: TextAlign.start,),
+                Image(
+                  image: AssetImage("assets/images/right_arrow.png"),
+                  width: 25,
+                  height: 25,
+                  alignment: Alignment.centerLeft,
+                  color: Color(0xfff6ae2d),
+                ),
+              ],
+            ),
+          ),
+        )
     );
   }
 }
