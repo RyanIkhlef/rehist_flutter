@@ -1,6 +1,3 @@
-// ignore_for_file: avoid_print
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'navigation/nav_drawer.dart';
@@ -213,7 +210,6 @@ class HomePage extends StatelessWidget {
               backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
             ),
             onPressed: () {
-              print('Pressed');
             },
             child: Row(
               children: const [
