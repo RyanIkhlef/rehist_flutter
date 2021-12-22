@@ -1,45 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'navigation/nav_drawer.dart';
-import 'navigation/nav_bar.dart';
-import 'package:rehist/services/event_service.dart';
 import 'package:rehist/services/association_service.dart';
 
-class MapsEventsPage extends StatelessWidget {
-  MapsEventsPage({Key? key}) : super(key: key);
+class MapsAssociationsPage extends StatefulWidget {
+  const MapsAssociationsPage({Key? key}) : super(key: key);
 
-  static const String routeName = '/mapsEvents';
+  static const String routeName = '/mapsAssociations';
 
+  static const LatLng showLocation = LatLng(48.84861, 2.36652);
+
+  @override
+  State<MapsAssociationsPage> createState() => _MapsAssociationsPageState();
+}
+
+class _MapsAssociationsPageState extends State<MapsAssociationsPage> {
   late GoogleMapController mapController;
-  final LatLng _center = const LatLng(48.84861, 2.36652);
-  static const LatLng showLocation = const LatLng(48.84861, 2.36652);
 
-  MapType _currentMapType = MapType.normal;
-  Set<Marker> markers = new Set<Marker>();
+  final LatLng _center = const LatLng(48.84861, 2.36652);
+
+  final MapType _currentMapType = MapType.normal;
+
+  Set<Marker> markers = <Marker>{};
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
 
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
+    return Scaffold(
             appBar: AppBar(
-              title: const Text('Evenements'),
-              backgroundColor: Colors.green[700],
+              title: const Text('Associations'),
+              backgroundColor: Theme.of(context).primaryColor,
             ),
             body: Center(
                 child: FutureBuilder(
-                    future: EventService.getEvents(),
+                    future: AssociationService.getAssociations(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      Set<Marker> markers = new Set<Marker>();
+                      Set<Marker> markers = <Marker>{};
                       for (var data in snapshot.data) {
                         markers.add(Marker( //add second marker
-                          markerId: MarkerId(showLocation.toString()),
+                          markerId: MarkerId(MapsAssociationsPage.showLocation.toString()),
                           position: LatLng(data['long'], data['lat']),
                           //position of marker
                           infoWindow: InfoWindow(title: data['title'],
-                              snippet: data['date']),
+                              snippet: data['description']),
                           icon: BitmapDescriptor.defaultMarker,
                         ));
                       }
@@ -54,7 +59,6 @@ class MapsEventsPage extends StatelessWidget {
                     }
                 )
             )
-        )
     );
   }
 }

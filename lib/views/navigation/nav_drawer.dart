@@ -33,7 +33,7 @@ class NavDrawer extends StatelessWidget {
                 style: TextStyle(fontSize: 24)
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pushNamed(context, "/associations");
             },
           ),
           ListTile(

@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:rehist/services/event_service.dart';
 
 class EventsPage extends StatefulWidget {
+  const EventsPage({Key? key}) : super(key: key);
+
   @override
   EventsPageState createState() => EventsPageState();
 }
 
 class EventsPageState extends State<EventsPage> {
-  TextEditingController _textController = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
   List<Map> initialList = [];
   List<Map> filteredList = List<Map>.empty();
 
+  @override
   void initState() {
     super.initState();
     EventService.getEvents().then((snapshot) =>
@@ -25,7 +28,7 @@ class EventsPageState extends State<EventsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Rechercher un événement')),
+        appBar: AppBar(title: const Text('Rechercher un événement')),
         body: Column(
           children: <Widget>[
             TextField(
@@ -44,7 +47,7 @@ class EventsPageState extends State<EventsPage> {
                 });
               },
             ),
-            if (filteredList.length == 0 && _textController.text.isEmpty)
+            if (filteredList.isEmpty && _textController.text.isEmpty)
               Expanded(
                   child: ListView.builder(
                       itemCount: initialList.length,
@@ -62,9 +65,9 @@ class EventsPageState extends State<EventsPage> {
                                 trailing: Text(initialList[index]['date'])));
                       }))
             else
-              if (filteredList.length == 0 && _textController.text.isNotEmpty)
-                Expanded(
-                  child: Container(
+              if (filteredList.isEmpty && _textController.text.isNotEmpty)
+                const Expanded(
+                  child: SizedBox(
                     child: Text('Aucune donnée'),
                   ),
                 )

@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:rehist/services/association_service.dart';
 
 class AssociationsPage extends StatefulWidget {
+  const AssociationsPage({Key? key}) : super(key: key);
+
   @override
   AssociationsPageState createState() => AssociationsPageState();
 }
 
 class AssociationsPageState extends State<AssociationsPage> {
-  TextEditingController _textController = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
   List<Map> initialList = [];
   List<Map> filteredList = List<Map>.empty();
 
+  @override
   void initState() {
     super.initState();
     AssociationService.getAssociations().then((snapshot) =>
@@ -25,13 +28,15 @@ class AssociationsPageState extends State<AssociationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Rechercher une association')),
+        appBar: AppBar(
+            backgroundColor: Theme.of(context).primaryColor,
+            title: const Text('Rechercher une association')),
         body: Column(
           children: <Widget>[
             TextField(
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Rechercher un événement ...'
+                  hintText: 'Rechercher une association ...'
               ),
               controller: _textController,
               onChanged: (text) {
@@ -44,7 +49,7 @@ class AssociationsPageState extends State<AssociationsPage> {
                 });
               },
             ),
-            if (filteredList.length == 0 && _textController.text.isEmpty)
+            if (filteredList.isEmpty && _textController.text.isEmpty)
               Expanded(
                   child: ListView.builder(
                       itemCount: initialList.length,
@@ -62,9 +67,9 @@ class AssociationsPageState extends State<AssociationsPage> {
                                 ));
                       }))
             else
-              if (filteredList.length == 0 && _textController.text.isNotEmpty)
-                Expanded(
-                  child: Container(
+              if (filteredList.isEmpty && _textController.text.isNotEmpty)
+                const Expanded(
+                  child: SizedBox(
                     child: Text('Aucune donnée'),
                   ),
                 )

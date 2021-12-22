@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rehist/services/event_service.dart';
 import 'package:rehist/services/association_service.dart';
-import 'package:rehist/views/events_page.dart';
 
 import 'navigation/nav_drawer.dart';
 import 'navigation/nav_bar.dart';
@@ -62,24 +61,20 @@ class HomePage extends StatelessWidget {
 
   _nextEvents(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 15),
-          child: Text(
-            "Prochains événements",
-            textAlign: TextAlign.start,
-            style: TextStyle(
-              fontSize: 20,
-            ),
+        const Text(
+          "Prochains événements",
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            fontSize: 20,
           ),
         ),
-        new FlatButton(
+        TextButton(
             onPressed: () {
-              print("button maps");
               Navigator.pushNamed(context, "/mapsEvents");
             },
-            child: new Text("Maps")
+            child: const Text("Maps")
         ),
         _showAll(context, "/events"),
       ],
@@ -96,7 +91,7 @@ class HomePage extends StatelessWidget {
           if(snapshot.hasData) {
             List<Widget> cards = [];
             for(var data in snapshot.data) {
-              cards.add(_eventCard(data));
+              cards.add(_eventCard(context, data));
             }
             return ListView(children: cards);
           }
@@ -110,13 +105,14 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  _eventCard(doc) {
+  _eventCard(BuildContext context, doc) {
     String title = doc["title"];
     String description = doc["description"];
     String date = doc["date"];
     String address = doc["address"];
     String logoUrl = doc["logo"];
     Image logo;
+
     if(logoUrl != "") {
       logo = Image.network(doc['logo'],
         width: 70,
@@ -135,10 +131,11 @@ class HomePage extends StatelessWidget {
           children: [
             Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   logo,
                   SizedBox(
-                    width: 275,
+                    width: 2 * (MediaQuery.of(context).size.width / 4),
                     height: 100,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,8 +160,8 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
+                    width: MediaQuery.of(context).size.width / 4,
                     height: 100,
-                    width: 75,
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -187,24 +184,20 @@ class HomePage extends StatelessWidget {
 
   _lastAssociations(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 15),
-          child: Text(
-            "Dernières associations",
-            textAlign: TextAlign.start,
-            style: TextStyle(
-              fontSize: 20,
-            ),
+        const Text(
+          "Dernières associations",
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            fontSize: 20,
           ),
         ),
-        new FlatButton(
+        TextButton(
             onPressed: () {
-              print("button maps");
               Navigator.pushNamed(context, "/mapsAssociations");
             },
-            child: new Text("Maps")
+            child: const Text("Maps")
         ),
         _showAll(context, "/associations"),
       ],
@@ -221,7 +214,7 @@ class HomePage extends StatelessWidget {
           if(snapshot.hasData) {
             List<Widget> cards = [];
             for(var data in snapshot.data) {
-              cards.add(_associationCard(data));
+              cards.add(_associationCard(context, data));
             }
             return ListView(children: cards);
           }
@@ -235,12 +228,13 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  _associationCard(doc) {
+  _associationCard(BuildContext context, doc) {
     String title = doc["title"];
     String description = doc["description"];
     String address = doc["address"];
     String logoUrl = doc["logo"];
     Image logo;
+
     if(logoUrl != "") {
       logo = Image.network(doc['logo'],
         width: 70,
@@ -259,10 +253,11 @@ class HomePage extends StatelessWidget {
           children: [
             Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   logo,
                   SizedBox(
-                    width: 275,
+                    width: 2 * (MediaQuery.of(context).size.width / 4),
                     height: 100,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,17 +282,13 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 100,
-                    width: 75,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(address,
-                            textAlign: TextAlign.end,
-                            overflow: TextOverflow.clip,
-                            style: const TextStyle(color: Colors.grey),)
-                        ]),
+                      height: MediaQuery.of(context).size.width / 4,
+                      width: 75,
+                      child: Text(address,
+                        textAlign: TextAlign.end,
+                        overflow: TextOverflow.clip,
+                        style: const TextStyle(color: Colors.grey),)
+
                   ),
                 ]),
           ]),
@@ -305,29 +296,26 @@ class HomePage extends StatelessWidget {
   }
 
   _showAll(BuildContext context, String route) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 15),
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-        ),
-        onPressed: () {
-          Navigator.pushNamed(context, route);
-        },
-        child: Row(
-          children: const [
-            Text("Voir tous",
-              style: TextStyle(color: Color(0xfff6ae2d)),
-              textAlign: TextAlign.start,),
-            Image(
-              image: AssetImage("assets/images/right_arrow.png"),
-              width: 25,
-              height: 25,
-              alignment: Alignment.centerLeft,
-              color: Color(0xfff6ae2d),
-            ),
-          ],
-        ),
+    return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, route);
+      },
+      child: Row(
+        children: const [
+          Text("Voir tous",
+            style: TextStyle(color: Color(0xfff6ae2d)),
+            textAlign: TextAlign.start,),
+          Image(
+            image: AssetImage("assets/images/right_arrow.png"),
+            width: 25,
+            height: 25,
+            alignment: Alignment.centerRight,
+            color: Color(0xfff6ae2d),
+          ),
+        ],
       ),
     );
   }
