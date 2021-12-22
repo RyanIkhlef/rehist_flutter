@@ -34,10 +34,7 @@ class HomePage extends StatelessWidget {
 
   _banner(BuildContext context) {
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
+      width: MediaQuery.of(context).size.width,
       height: 200,
       child: const Align(
         child: SizedBox(
@@ -57,8 +54,7 @@ class HomePage extends StatelessWidget {
         image: DecorationImage(
           image: AssetImage("assets/images/rehist_banner.png"),
           fit: BoxFit.fill,
-          colorFilter: ColorFilter.mode(
-              Color(0x4D000000), BlendMode.luminosity),
+          colorFilter: ColorFilter.mode(Color(0x4D000000), BlendMode.luminosity),
         ),
       ),
     );
@@ -93,10 +89,7 @@ class HomePage extends StatelessWidget {
   _eventList(BuildContext context) {
     return SizedBox(
       height: 350,
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
+      width: MediaQuery.of(context).size.width,
       child: FutureBuilder(
         future: EventService.getLatestEvents(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -124,7 +117,7 @@ class HomePage extends StatelessWidget {
     String address = doc["address"];
     String logoUrl = doc["logo"];
     Image logo;
-    if (logoUrl != "") {
+    if(logoUrl != "") {
       logo = Image.network(doc['logo'],
         width: 70,
         height: 70,

@@ -10,7 +10,7 @@ class EventService {
       for (var doc in querySnapshot.docs) {
         var date = (doc['date_begin'] as Timestamp).toDate();
         String dateToShow = date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString();
-        summariesEvents.add({'title': doc['name'], 'description': doc['description'], 'date': dateToShow, 'logo': doc['logo'], 'long': doc['long'], 'lat': doc['lat']});
+        summariesEvents.add({'title': doc['name'], 'address':doc['address'], 'description': doc['description'], 'date': dateToShow, 'logo': doc['logo']});
       }
       return summariesEvents;
     });
