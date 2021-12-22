@@ -206,7 +206,7 @@ class HomePage extends StatelessWidget {
             },
             child: new Text("Maps")
         ),
-        _showAll(context, ""),
+        _showAll(context, "/associations"),
       ],
     );
   }

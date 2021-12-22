@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rehist/views/events_page.dart';
+import 'package:rehist/views/associations_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -17,6 +18,7 @@ void main() async {
 Map<String, WidgetBuilder> routes = {
   "/": (context) => const HomePage(),
   "/events": (context) => EventsPage(),
+  "/associations": (context) => AssociationsPage(),
     "/mapsEvents": (context) => MapsEventsPage(),
   "/mapsAssociations": (context) => MapsAssociationsPage()
 };
