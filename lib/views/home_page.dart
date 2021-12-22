@@ -81,7 +81,7 @@ class HomePage extends StatelessWidget {
             },
             child: new Text("Maps")
         ),
-        _showAll(context, EventsPage.routeName),
+        _showAll(context, "/events"),
       ],
     );
   }

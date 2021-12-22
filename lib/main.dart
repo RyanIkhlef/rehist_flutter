@@ -16,7 +16,7 @@ void main() async {
 }
 Map<String, WidgetBuilder> routes = {
   "/": (context) => const HomePage(),
-  "/events": (context) => const EventsPage(),
+  "/events": (context) => EventsPage(),
     "/mapsEvents": (context) => MapsEventsPage(),
   "/mapsAssociations": (context) => MapsAssociationsPage()
 };
