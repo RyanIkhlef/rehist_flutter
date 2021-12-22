@@ -25,7 +25,7 @@ class EventsPageState extends State<EventsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Test search')),
+        appBar: AppBar(title: Text('Rechercher un événement')),
         body: Column(
           children: <Widget>[
             TextField(
