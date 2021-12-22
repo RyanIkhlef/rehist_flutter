@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 import 'views/home_page.dart';
+import 'views/mapsEvent_page.dart';
+import 'views/mapsAssociations_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +16,9 @@ void main() async {
 }
 Map<String, WidgetBuilder> routes = {
   "/": (context) => const HomePage(),
-  "/events": (context) => const EventsPage()
+  "/events": (context) => const EventsPage(),
+    "/mapsEvents": (context) => MapsEventsPage(),
+  "/mapsAssociations": (context) => MapsAssociationsPage()
 };
 
 class MyApp extends StatelessWidget {

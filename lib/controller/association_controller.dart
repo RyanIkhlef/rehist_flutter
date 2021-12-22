@@ -1,21 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class EventController {
+class AssociationController {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  static const String _eventTable = "/event";
+  static const String _eventTable = "/association";
 
-  static getLatestEvents() {
+  static getLatestAssociations() {
     return _firestore
         .collection(_eventTable)
-        .orderBy("date_begin")
+        .orderBy("created")
         .limit(3)
         .get();
   }
 
-  static getEvents() {
+  static getAssociations() {
     return _firestore
         .collection(_eventTable)
-        .orderBy("date_begin")
+        .orderBy("created")
         .get();
   }
 }

@@ -19,9 +19,9 @@ class HomePage extends StatelessWidget {
           children: [
             _banner(context),
             const Padding(padding: EdgeInsets.only(bottom: 40)),
-            _nextEvents(),
+            _nextEvents(context),
             _eventList(context),
-            _lastAssociations(),
+            _lastAssociations(context),
             _associationList(context),
           ],
         ),
@@ -31,7 +31,10 @@ class HomePage extends StatelessWidget {
 
   _banner(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
       height: 200,
       child: const Align(
         child: SizedBox(
@@ -51,13 +54,14 @@ class HomePage extends StatelessWidget {
         image: DecorationImage(
           image: AssetImage("assets/images/rehist_banner.png"),
           fit: BoxFit.fill,
-          colorFilter: ColorFilter.mode(Color(0x4D000000), BlendMode.luminosity),
+          colorFilter: ColorFilter.mode(
+              Color(0x4D000000), BlendMode.luminosity),
         ),
       ),
     );
   }
 
-  _nextEvents() {
+  _nextEvents(BuildContext context) {
     return Row(
       children: [
         const Align(
@@ -73,6 +77,13 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
+        new FlatButton(
+            onPressed: () {
+              print("button maps");
+              Navigator.pushNamed(context, "/mapsEvents");
+            },
+            child: new Text("Maps")
+        ),
         _showAll(),
       ],
     );
@@ -81,25 +92,28 @@ class HomePage extends StatelessWidget {
   _eventList(BuildContext context) {
     return SizedBox(
       height: 350,
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
       child: FutureBuilder(
-            future: EventService.getLatestEvents(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if(snapshot.hasData) {
-                List<Widget> cards = [];
-                for(var data in snapshot.data) {
-                  cards.add(_eventCard(data));
-                }
-                return ListView(children: cards);
-              }
-              else if(snapshot.hasError) {
-                return const Text("Erreur");
-              } else {
-                return const Text("fetching...");
-              }
-            },
-          ),
-      );
+        future: EventService.getLatestEvents(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            List<Widget> cards = [];
+            for (var data in snapshot.data) {
+              cards.add(_eventCard(data));
+            }
+            return ListView(children: cards);
+          }
+          else if (snapshot.hasError) {
+            return const Text("Erreur");
+          } else {
+            return const Text("fetching...");
+          }
+        },
+      ),
+    );
   }
 
   _eventCard(doc) {
@@ -108,7 +122,7 @@ class HomePage extends StatelessWidget {
     String date = doc["date"];
     String logoUrl = doc["logo"];
     Image logo;
-    if(logoUrl != "") {
+    if (logoUrl != "") {
       logo = Image.network(doc['logo'],
         width: 70,
         height: 70,
@@ -162,7 +176,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  _lastAssociations() {
+  _lastAssociations(BuildContext context) {
     return Row(
       children: [
         const Align(
@@ -178,6 +192,13 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
+        new FlatButton(
+            onPressed: () {
+              print("button maps");
+              Navigator.pushNamed(context, "/mapsAssociations");
+            },
+            child: new Text("Maps")
+        ),
         _showAll()
       ],
     );
@@ -186,7 +207,10 @@ class HomePage extends StatelessWidget {
   _associationList(BuildContext context) {
     return SizedBox(
       height: 350,
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
       child: ListView(
         children: [
           const ListTile(title: Text("Association 1"),),
@@ -209,8 +233,7 @@ class HomePage extends StatelessWidget {
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
             ),
-            onPressed: () {
-            },
+            onPressed: () {},
             child: Row(
               children: const [
                 Text("Voir tous",
