@@ -1,9 +1,11 @@
 // ignore_for_file: avoid_print
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'navigation/nav_drawer.dart';
 import 'navigation/nav_bar.dart';
+import 'package:rehist/services/event_service.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -81,16 +83,83 @@ class HomePage extends StatelessWidget {
 
   _eventList(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 350,
       width: MediaQuery.of(context).size.width,
-      child: ListView(
+      child: FutureBuilder(
+            future: EventService.getLatestEvents(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if(snapshot.hasData) {
+                List<Widget> cards = [];
+                for(var data in snapshot.data) {
+                  cards.add(_eventCard(data));
+                }
+                return ListView(children: cards);
+              }
+              else if(snapshot.hasError) {
+                return const Text("Erreur");
+              } else {
+                return const Text("fetching...");
+              }
+            },
+          ),
+      );
+  }
+
+  _eventCard(doc) {
+    String title = doc["title"];
+    String description = doc["description"];
+    String date = doc["date"];
+    String logoUrl = doc["logo"];
+    Image logo;
+    if(logoUrl != "") {
+      logo = Image.network(doc['logo'],
+        width: 70,
+        height: 70,
+      );
+    } else {
+      logo = const Image(
+        image: AssetImage("assets/images/default_logo.png"),
+        width: 70,
+        height: 70,
+      );
+    }
+
+    return Card(
+      child: ListBody(
         children: [
-          const ListTile(title: Text("Event 1"),),
-          ListBody(children: const [Text("description")],),
-          const ListTile(title: Text("Event 2"),),
-          ListBody(children: const [Text("description")],),
-          const ListTile(title: Text("Event 3"),),
-          ListBody(children: const [Text("description")],),
+          Row(
+            children: [
+              logo,
+              SizedBox(
+                width: 275,
+                height: 100,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        title,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: const TextStyle(fontSize: 20),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Text(
+                      description,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
+                ),
+              ),
+              Text(
+                  date,
+                  textAlign: TextAlign.end
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -119,7 +188,7 @@ class HomePage extends StatelessWidget {
 
   _associationList(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 350,
       width: MediaQuery.of(context).size.width,
       child: ListView(
         children: [
